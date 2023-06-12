@@ -16,43 +16,43 @@ const newUser = async( req, res)=>{
     try{
  const data = req.body
 //  console.log(data);
- if(!requestValidation(data)){ return res.status(400).send({ status: false, message: "please provide the data in the body" });}
+ if(!requestValidation(data)){ return res.status(400).send({ status: false, message: "please enter the data in the body" });}
  
  const {first_name, last_name,email,phone,  password, cpassword, address } = data; 
  const {text, country, state, city} = address;
 
 
-    if(!stringValidation(first_name)){ return res.status(400).send({ status : false, message:"please provide first name"}); }
-    if(!nameValidation(first_name)){ return res.status(400).send({ status : false, message:"please provide valid name"});}
+    if(!stringValidation(first_name)){ return res.status(400).send({ status : false, message:"please enter first name"}); }
+    if(!nameValidation(first_name)){ return res.status(400).send({ status : false, message:"please enter valid name"});}
 
 
-    if(!stringValidation(last_name)){ return res.status(400).send({ status : false, message:"please provide first name"}); }
-    if(!nameValidation(last_name)){   return res.status(400).send({ status : false, message:"please provide valid name"});}
+    if(!stringValidation(last_name)){ return res.status(400).send({ status : false, message:"please enter last name"}); }
+    if(!nameValidation(last_name)){   return res.status(400).send({ status : false, message:"please enter valid name"});}
 
     
-    if(!stringValidation(email)){ return res.status(400).send({ status : false, message:"please provide email"}); }
-    if(!emailValidation(email)){ return res.status(400).send({ status : false, message:"please provide valid email"});}
+    if(!stringValidation(email)){ return res.status(400).send({ status : false, message:"please enter email"}); }
+    if(!emailValidation(email)){ return res.status(400).send({ status : false, message:"please enter valid email"});}
 
-    if(!stringValidation(phone)){ return res.status(400).send({ status : false, message:"please provide phone number"}); }
-    if(!phoneNumberValidation(phone)){ return res.status(400).send({state : false, message : "please provide valid phone number"})}
+    if(!stringValidation(phone)){ return res.status(400).send({ status : false, message:"please enter phone number"}); }
+    if(!phoneNumberValidation(phone)){ return res.status(400).send({state : false, message : "please enter valid phone number"})}
 
-    if (!stringValidation(password)) { return res.status(400).send({ status: false, message: "please provide the password" }) }
+    if (!stringValidation(password)) { return res.status(400).send({ status: false, message: "please enter the password" }) }
         if (password.length < 6) { return res.status(400).send({ status: false, message: "Password must contain atleast 6 characters" }) }
-        if (!passwordValidation(password)) { return res.status(400).send({ status: false, message: "Please provide a valid password with atleast one uppercase, one lowercase and one special character." }) }
+        if (!passwordValidation(password)) { return res.status(400).send({ status: false, message: "Please enter a valid password with atleast one uppercase, one lowercase and one special character." }) }
 
-    if(!stringValidation(cpassword)) { return res.status(400).send({ status: false, message: "please provide the password" })}
-        if(cpassword !== password) {return res.status(400).send({ status: false, message: "password is not matching" })}
+    if(!stringValidation(cpassword)) { return res.status(400).send({ status: false, message: "please enter the password" })}
+        if(cpassword !== password) {return res.status(400).send({ status: false, message: "password did not match" })}
 
-        if (!stringValidation(text)) { return res.status(400).send({ status: false, message: "please provide the address" }) }
+        if (!stringValidation(text)) { return res.status(400).send({ status: false, message: "please enter the address" }) }
 
-        if (!stringValidation(country)) { return res.status(400).send({ status: false, message: "please provide the country" }) }
+        if (!stringValidation(country)) { return res.status(400).send({ status: false, message: "please enter the country" }) }
 
-        if (!stringValidation(state)) { return res.status(400).send({ status: false, message: "please provide the state" }) }
+        if (!stringValidation(state)) { return res.status(400).send({ status: false, message: "please enter the state" }) }
 
-        if (!stringValidation(city)) { return res.status(400).send({ status: false, message: "please provide the city" }) }
+        if (!stringValidation(city)) { return res.status(400).send({ status: false, message: "please enter the city" }) }
 
         let coordnates = await axios.get(`https://geocode.maps.co/search?city=${city}&state=${state}&country=${country}`)
-        if (coordnates.length == 0) { return res.status(400).send({ status: false, message: "please provide valid city, state or country" }) }
+        if (coordnates.length == 0) { return res.status(400).send({ status: false, message: " city, state or country name did not found" }) }
 
         const salt = await bcrypt.genSalt(10);
         const hashedpassword = await bcrypt.hash(password, salt);
@@ -95,7 +95,7 @@ const login = async function (req, res) {
         let password = req.body.password
 
         if (!stringValidation(email)) { return res.status(400).send({ status: false, message: "email or phone is required" }) }
-        if (!emailValidation(email) && !phoneNumberValidation(email)) { return res.status(400).send({ status: false, message: "please provide a valid email or phone" }) }
+        if (!emailValidation(email) && !phoneNumberValidation(email)) { return res.status(400).send({ status: false, message: "please enter a valid email or phone" }) }
 
         if (!stringValidation(password)) { return res.status(400).send({ status: false, message: "password is required" }) }
 
@@ -262,37 +262,37 @@ const updateUser = async function (req, res) {
         const { text, state, city, country } = address
 
         if (first_name) {
-            if (!stringValidation(first_name)) { return res.status(400).send({ status: false, message: "please provide first name" }) }
-            if (!nameValidation(first_name)) { return res.status(400).send({ status: false, message: "provide valid first name" }) }
+            if (!stringValidation(first_name)) { return res.status(400).send({ status: false, message: "please enter first name" }) }
+            if (!nameValidation(first_name)) { return res.status(400).send({ status: false, message: "enter valid first name" }) }
             userData.first_name = first_name
         }
 
         if (last_name) {
-            if (!stringValidation(last_name)) { return res.status(400).send({ status: false, message: "please provide first name" }) }
-            if (!nameValidation(last_name)) { return res.status(400).send({ status: false, message: "provide valid first name" }) }
+            if (!stringValidation(last_name)) { return res.status(400).send({ status: false, message: "please enter first name" }) }
+            if (!nameValidation(last_name)) { return res.status(400).send({ status: false, message: "enter valid first name" }) }
             userData.last_name = last_name
         }
 
         if (email) {
-            if (!stringValidation(email)) { return res.status(400).send({ status: false, message: "please provide email" }) }
-            if (!emailValidation(email)) { return res.status(400).send({ status: false, message: "provide valid email" }) }
+            if (!stringValidation(email)) { return res.status(400).send({ status: false, message: "please enter email" }) }
+            if (!emailValidation(email)) { return res.status(400).send({ status: false, message: "enter valid email" }) }
             let uniqueEmail = await userModel.find({ $and: [{ _id: { $ne: userData._id } }, { email: email }] })
             if (uniqueEmail.length) { return res.status(400).send({ status: false, message: "This email is already registered" }) }
             userData.email = email
         }
 
         if (phone) {
-            if (!stringValidation(phone)) { return res.status(400).send({ status: false, message: "please provide phone number" }) }
-            if (!phoneNumberValidation(phone)) { return res.status(400).send({ status: false, message: "provide valid phone number" }) }
+            if (!stringValidation(phone)) { return res.status(400).send({ status: false, message: "please enter phone number" }) }
+            if (!phoneNumberValidation(phone)) { return res.status(400).send({ status: false, message: "enter valid phone number" }) }
             let uniquephone = await userModel.find({ $and: [{ _id: { $ne: userData._id } }, { phone: phone }] })
             if (uniquephone.length) { return res.status(400).send({ status: false, message: "This phone number is already registered" }) }
             userData.phone = phone
         }
 
         if (address) {
-            if (!state || !country || !city || !text) return res.status(400).send({ status: false, message: "provide all the fields of address" })
+            if (!state || !country || !city || !text) return res.status(400).send({ status: false, message: "enter all the fields of address" })
             let coordnates = await axios.get(`https://geocode.maps.co/search?city=${city}&state=${state}&country=${country}`)
-            if (coordnates.length == 0) { return res.status(400).send({ status: false, message: "please provide valid city, state or country" }) }
+            if (coordnates.length == 0) { return res.status(400).send({ status: false, message: "please enter valid city, state or country" }) }
             userData.address = address;
             userData.location.coordinates[0] = coordnates.data[0].lon;
             userData.location.coordinates[1] = coordnates.data[0].lat;
@@ -391,7 +391,7 @@ const forgotPasswordOtp = async function (req, res) {
                 res.cookie("resetToken", token, {
                     expires: new Date(Date.now() + 180000),
                 });
-                res.status(200).send({ status: true, message: "Otp send successfully" });
+                res.status(200).send({ status: true, message: "Otp has sent successfully" });
             }
         })
 
@@ -407,7 +407,7 @@ const otpAuth = async function (req, res) {
         let { otp } = req.body
 
         let token = req.cookies.resetToken;
-        if (!token) return res.status(403).send({ status: false, message: "Otp is Expired" });
+        if (!token) return res.status(403).send({ status: false, message: "Otp has Expired" });
 
         let verifyToken;
 
@@ -465,9 +465,9 @@ const resetPassword = async function (req, res) {
 
         if (verifyToken.otp != user.otp) return res.status(400).send({ status: false, message: "Something went wrong" });
 
-        if (!stringValidation(password)) { return res.status(400).send({ status: false, message: "please provide the password" }) }
-        if (!passwordValidation(password)) { return res.status(400).send({ status: false, message: "Please provide a valid password with atleast one uppercase one lowercase  one special character and must contain atleast 6 characters" }) }
-        if (!stringValidation(cpassword)) { return res.status(400).send({ status: false, message: "please provide the password" }) }
+        if (!stringValidation(password)) { return res.status(400).send({ status: false, message: "please enter the password" }) }
+        if (!passwordValidation(password)) { return res.status(400).send({ status: false, message: "Please enter a valid password with atleast one uppercase one lowercase  one special character and must contain atleast 6 characters" }) }
+        if (!stringValidation(cpassword)) { return res.status(400).send({ status: false, message: "please enter the password" }) }
         if (cpassword != password) return res.status(400).send({ status: false, message: "password is not matching" })
 
         const salt = await bcrypt.genSalt(10);
@@ -494,9 +494,9 @@ const createNewConversation = async (req, res) => {
   
     try {
       const savedConversation = await newConversation.save();
-      res.status(200).json(savedConversation);
+      res.status(200).json({ status: true, data: savedConversation});
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ status: false, message: err.message });
     }
   };
   
@@ -507,9 +507,9 @@ const createNewConversation = async (req, res) => {
       const conversation = await conversationModel.find({
         members: { $in: [req.params.userId] },
       });
-      res.status(200).json(conversation);
+      res.status(200).json({ status: true, data: conversation});
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ status: false, message: err.message });
     }
   }
 
@@ -518,9 +518,9 @@ const createNewConversation = async (req, res) => {
   
     try {
       const savedMessage = await newMessage.save();
-      res.status(200).json(savedMessage);
+      res.status(200).json({ status: true, data: savedMessage});
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ status: false, message: err.message });
     }
   }
   
@@ -531,9 +531,9 @@ const createNewConversation = async (req, res) => {
       const messages = await messageModel.find({
         conversationId: req.params.conversationId,
       });
-      res.status(200).json(messages);
+      res.status(200).json({status : true, data :messages});
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).json({ status: false, message: err.message });
     }
   }
 
