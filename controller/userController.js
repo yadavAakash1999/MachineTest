@@ -12,6 +12,8 @@ const messageModel = require("../models/messageModel.js")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
 
+
+
 const newUser = async( req, res)=>{
     try{
  const data = req.body
@@ -234,7 +236,7 @@ const searchFiends = async function (req, res) {
       //  console.log(userData,data);
 
         const friendList =  await friendModel.find({userId : userData._id}).populate(["friendId"])
-        console.log(friendList)
+        // console.log(friendList)
         const finalData = data.filter((data)=>userData._id.toString()!==data._id.toString())
                 .filter((data)=>
                 {
@@ -536,6 +538,8 @@ const createNewConversation = async (req, res) => {
       res.status(500).json({ status: false, message: err.message });
     }
   }
+
+  
 
 module.exports = {
     newUser, login, logout, fetchUserData, friendsDetails,

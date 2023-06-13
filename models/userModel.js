@@ -17,6 +17,7 @@ const userSchema = new mongoose.Schema({
                 coordinates:{type:[Number]}
              },
 
+        
         otp:String
     
 },{timestamps : true});
