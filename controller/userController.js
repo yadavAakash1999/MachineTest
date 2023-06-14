@@ -491,7 +491,7 @@ const resetPassword = async function (req, res) {
 const createNewConversation = async (req, res) => {
     // console.log(req.body, req.userData)
     const newConversation = new conversationModel({
-      members: [req.userData._id, req.body.receiverId],
+      members: [req.userData._id.toString(), req.body.receiverId],
     });
   
     try {
